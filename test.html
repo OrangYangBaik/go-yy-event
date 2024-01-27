@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <div class="title-text">
+        <div class="title login">
+            Login
+        </div>
+        <div class="title signup">
+            Register
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="slide-controls">
+            <input type="radio" name="slide" id="login" checked>
+            <input type="radio" name="slide" id="signup">
+            <label for="login" class="slide login">Login</label>
+            <label for="signup" class="slide signup">Register</label>
+            <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+            <form action="#" class="login">
+                <div class="field">
+                    <input type="text" placeholder="Email Address" required>
+                </div>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+            <form action="#" method="POST" onsubmit="submitForm(event);" class="signup">
+                <div class="field">
+                    <input type="text" placeholder="Nama" name="nama" required>
+                </div>
+                <div class="field">
+                    <input type="text" placeholder="Email" name="email" required>
+                </div>
+                <div class="field">
+                    <input type="text" placeholder="Nomor Handphone" name="no_telp" required>
+                </div>
+                <div class="field">
+                    <input type="text" placeholder="Company" name="company" required>
+                </div>
+                <div class="field">
+                    <input type="text" placeholder="Jabatan" name="jabatan" required>
+                </div>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" value="Register">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginText = document.querySelector(".title-text .login");
+        const loginForm = document.querySelector("form.login");
+        const loginBtn = document.querySelector("label.login");
+        const registerBtn = document.querySelector("label.signup");
+        const registerLink = document.querySelector("form.signup");
+        registerBtn.onclick = (()=>{
+            loginForm.style.marginLeft = "-50%";
+            loginText.style.marginLeft = "-50%";
+        });
+        loginBtn.onclick = (()=>{
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+        });
+        registerLink.onclick = (()=>{
+            registerBtn.click();
+            return false;
+        });
+
+        function submitForm(event) {
+            event.preventDefault();
+            const form = document.querySelector('form.signup');
+            const formData = new FormData(form);
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+            console.log(JSON.stringify(jsonData))
+
+            fetch('http://127.0.0.1:6000/registrasi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+</script>
+</body>
+</html>

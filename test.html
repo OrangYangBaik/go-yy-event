@@ -34,7 +34,7 @@
                     <input type="submit" value="Login">
                 </div>
             </form>
-            <form action="#" method="POST" onsubmit="submitForm(event);" class="signup">
+            <form action="#" method="POST" class="signup">
                 <div class="field">
                     <input type="text" placeholder="Nama" name="nama" required>
                 </div>
@@ -64,7 +64,7 @@
         const loginForm = document.querySelector("form.login");
         const loginBtn = document.querySelector("label.login");
         const registerBtn = document.querySelector("label.signup");
-        const registerLink = document.querySelector("form.signup");
+
         registerBtn.onclick = (()=>{
             loginForm.style.marginLeft = "-50%";
             loginText.style.marginLeft = "-50%";
@@ -73,22 +73,20 @@
             loginForm.style.marginLeft = "0%";
             loginText.style.marginLeft = "0%";
         });
-        registerLink.onclick = (()=>{
-            registerBtn.click();
-            return false;
-        });
+
+        const registerForm = document.querySelector('form.signup');
+        registerForm.addEventListener('submit', submitForm);
 
         function submitForm(event) {
             event.preventDefault();
-            const form = document.querySelector('form.signup');
-            const formData = new FormData(form);
+            const formData = new FormData(registerForm);
             const jsonData = {};
             formData.forEach((value, key) => {
                 jsonData[key] = value;
             });
             console.log(JSON.stringify(jsonData))
 
-            fetch('http://127.0.0.1:6000/registrasi', {
+            fetch('https://go-yy-event-production.up.railway.app/registrasi', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

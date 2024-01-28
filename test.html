@@ -1,112 +1,160 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="utf-8">
     <title>Welcome</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-<div class="wrapper">
-    <div class="title-text">
-        <div class="title login">
-            Login
-        </div>
-        <div class="title signup">
-            Register
+    <div class="wrapper">
+        <div class="form-container">
+            <div class="title-text">
+                <div class="title login">
+                  Attendance
+                  <div class="event-info">
+                     <h4 class="event-title">Medan Partner Conference 2024</h4>
+                     <p class="event-detail"><i class="fa fa-map-marker"></i>: Arya Duta Medan</p>
+                     <p class="event-detail"><i class="fa fa-calendar"></i>: February 28, 2024</p>
+                     <p class="event-detail"><i class="fa fa-clock-o"></i>: 15:00 - 21:00</p>
+                  </div>
+                </div>
+                <div class="title signup">
+                  Registration
+                  <div class="event-info">
+                     <h4 class="event-title">Medan Partner Conference 2024</h4>
+                     <p class="event-detail"><i class="fa fa-map-marker"></i>: Arya Duta Medan</p>
+                     <p class="event-detail"><i class="fa fa-calendar"></i>: February 28, 2024</p>
+                     <p class="event-detail"><i class="fa fa-clock-o"></i>: 15:00 - 21:00</p>
+                  </div>
+                </div>
+            </div>
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Attendance</label>
+                <label for="signup" class="slide signup">Registration</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="#" class="login">
+                    <div class="field">
+                        <input type="text" placeholder="Email Address" name="email" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+                <form action="#" method="POST" class="signup">
+                    <div class="field">
+                        <input type="text" placeholder="Fullname" name="nama" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="Email" name="email" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="WA/Mobile Number" name="no_telp" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="Company" name="company" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="City/Region" name="region" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="form-container">
-        <div class="slide-controls">
-            <input type="radio" name="slide" id="login" checked>
-            <input type="radio" name="slide" id="signup">
-            <label for="login" class="slide login">Login</label>
-            <label for="signup" class="slide signup">Register</label>
-            <div class="slider-tab"></div>
-        </div>
-        <div class="form-inner">
-            <form action="#" class="login">
-                <div class="field">
-                    <input type="text" placeholder="Email Address" required>
-                </div>
-                <div class="field btn">
-                    <div class="btn-layer"></div>
-                    <input type="submit" value="Login">
-                </div>
-            </form>
-            <form action="#" method="POST" class="signup">
-                <div class="field">
-                    <input type="text" placeholder="Nama" name="nama" required>
-                </div>
-                <div class="field">
-                    <input type="text" placeholder="Email" name="email" required>
-                </div>
-                <div class="field">
-                    <input type="text" placeholder="Nomor Handphone" name="no_telp" required>
-                </div>
-                <div class="field">
-                    <input type="text" placeholder="Company" name="company" required>
-                </div>
-                <div class="field">
-                    <input type="text" placeholder="Jabatan" name="jabatan" required>
-                </div>
-                <div class="field btn">
-                    <div class="btn-layer"></div>
-                    <input type="submit" value="Register">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginText = document.querySelector(".title-text .login");
-        const loginForm = document.querySelector("form.login");
-        const loginBtn = document.querySelector("label.login");
-        const registerBtn = document.querySelector("label.signup");
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const loginText = document.querySelector(".title-text .login");
+          const loginForm = document.querySelector("form.login");
+          const loginBtn = document.querySelector("label.login");
+          const registerBtn = document.querySelector("label.signup");
 
-        registerBtn.onclick = (()=>{
-            loginForm.style.marginLeft = "-50%";
-            loginText.style.marginLeft = "-50%";
-        });
-        loginBtn.onclick = (()=>{
-            loginForm.style.marginLeft = "0%";
-            loginText.style.marginLeft = "0%";
-        });
+          registerBtn.onclick = (() => {
+              loginForm.style.marginLeft = "-50%";
+              loginText.style.marginLeft = "-50%";
+          });
+          loginBtn.onclick = (() => {
+              loginForm.style.marginLeft = "0%";
+              loginText.style.marginLeft = "0%";
+          });
 
-        const registerForm = document.querySelector('form.signup');
-        registerForm.addEventListener('submit', submitForm);
+          loginForm.addEventListener('submit', submitLoginForm);
 
-        function submitForm(event) {
-            event.preventDefault();
-            const formData = new FormData(registerForm);
-            const jsonData = {};
-            formData.forEach((value, key) => {
-                jsonData[key] = value;
-            });
-            console.log(JSON.stringify(jsonData))
+          function submitLoginForm(event) {
+              event.preventDefault();
+              const formData = new FormData(loginForm);
+              const jsonData = {};
+              formData.forEach((value, key) => {
+                  jsonData[key] = value;
+              });
 
-            fetch('https://go-yy-event-production.up.railway.app/registrasi', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(jsonData),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    });
-</script>
+              fetch('https://go-yy-event-production.up.railway.app/presensi', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(jsonData),
+                  })
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                      }
+                      return response.json();
+                  })
+                  .then(data => {
+                      console.log('Success:', data);
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+          }
+
+          const registerForm = document.querySelector('form.signup');
+          registerForm.addEventListener('submit', submitRegisterForm);
+
+          function submitRegisterForm(event) {
+              event.preventDefault();
+              const formData = new FormData(registerForm);
+              const jsonData = {};
+              formData.forEach((value, key) => {
+                  jsonData[key] = value;
+              });
+
+              fetch('https://go-yy-event-production.up.railway.app/registrasi', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(jsonData),
+                  })
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                      }
+                      return response.json();
+                  })
+                  .then(data => {
+                      console.log('Success:', data);
+                  })
+                  .catch(error => {
+                    if(error.Status == 422){
+                        alert("Cannot make registration, please try again")
+                    }
+                  });
+          }
+      });
+  </script>
 </body>
+
 </html>

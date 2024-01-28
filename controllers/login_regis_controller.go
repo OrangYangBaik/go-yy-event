@@ -52,15 +52,15 @@ func Registrasi(c *fiber.Ctx) error {
 		Email:      member.Email,
 		NoTelp:     member.NoTelp,
 		Company:    member.Company,
-		Jabatan:    member.Jabatan,
+		Region:     member.Region,
 		Is_present: false,
 	}
 
 	//memasukkan struct newMember ke database
 	_, err := memberCollection.InsertOne(ctx, newMember)
 	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(responses.MemberResponse{
-			Status:  http.StatusInternalServerError,
+		return c.Status(http.StatusUnprocessableEntity).JSON(responses.MemberResponse{
+			Status:  http.StatusUnprocessableEntity,
 			Message: "Failed to insert member",
 			Data:    &fiber.Map{"error": err.Error()},
 		})
@@ -123,7 +123,7 @@ func Presensi(c *fiber.Ctx) error {
 
 	if result.MatchedCount == 1 && result.ModifiedCount == 1 {
 		endpoint := fmt.Sprintf("https://sheetdb.io/api/v1/%s", os.Getenv("SHEETS_KEY"))
-		body := []byte(fmt.Sprintf(`{"nama": "%s", "email": "%s", "jabatan": "%s", "noTelp": "%s", "company": "%s"}`, member.Nama, member.Email, member.Jabatan, member.NoTelp, member.Company))
+		body := []byte(fmt.Sprintf(`{"nama": "%s", "email": "%s", "jabatan": "%s", "noTelp": "%s", "region": "%s"}`, member.Nama, member.Email, member.Region, member.NoTelp, member.Company))
 		payload := bytes.NewReader(body)
 
 		client := &http.Client{}

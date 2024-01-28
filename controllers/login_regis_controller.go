@@ -123,7 +123,7 @@ func Presensi(c *fiber.Ctx) error {
 
 	if result.MatchedCount == 1 && result.ModifiedCount == 1 {
 		endpoint := fmt.Sprintf("https://sheetdb.io/api/v1/%s", os.Getenv("SHEETS_KEY"))
-		body := []byte(fmt.Sprintf(`{"nama": "%s", "email": "%s", "jabatan": "%s", "noTelp": "%s", "region": "%s"}`, member.Nama, member.Email, member.Region, member.NoTelp, member.Company))
+		body := []byte(fmt.Sprintf(`{"nama": "%s", "email": "%s", "region": "%s", "noTelp": "%s", "company": "%s"}`, member.Nama, member.Email, member.Region, member.NoTelp, member.Company))
 		payload := bytes.NewReader(body)
 
 		client := &http.Client{}

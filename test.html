@@ -91,6 +91,15 @@
 
           loginForm.addEventListener('submit', submitLoginForm);
 
+          //loginForm.addEventListener('submit', preEvent);
+
+          function preEvent() {
+            alert("Cannot make attendance, please try again");
+            setTimeout(function() {
+                location.reload();
+            }, 100);
+          }
+
           function submitLoginForm(event) {
               event.preventDefault();
               const formData = new FormData(loginForm);
@@ -113,10 +122,16 @@
                       return response.json();
                   })
                   .then(data => {
-                      console.log('Success:', data);
+                    alert("Thank you taking the attendance, enjoy the event")
+                    setTimeout(function() {
+                        location.reload();
+                    }, 100);
                   })
                   .catch(error => {
-                      console.error('Error:', error);
+                    alert("Cannot make attendance, please try again");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 100);
                   });
           }
 
@@ -145,12 +160,12 @@
                       return response.json();
                   })
                   .then(data => {
-                      console.log('Success:', data);
+                    alert("Registration completed");
+                    location.reload();
                   })
                   .catch(error => {
-                    if(error.Status == 422){
-                        alert("Cannot make registration, please try again")
-                    }
+                    alert("Cannot make registration, please try again");
+                    location.reload();
                   });
           }
       });

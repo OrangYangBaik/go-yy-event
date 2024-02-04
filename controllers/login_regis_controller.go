@@ -66,6 +66,33 @@ func Registrasi(c *fiber.Ctx) error {
 		})
 	}
 
+	endpoint := fmt.Sprintf("%s%s?sheet=%s", os.Getenv("BASE_URL"), os.Getenv("SHEETS_KEY"), os.Getenv("SHEETS_REGISTRATION"))
+	body := []byte(fmt.Sprintf(`{"nama": "%s", "email": "%s", "region": "%s", "noTelp": "%s", "company": "%s"}`, member.Nama, member.Email, member.Region, member.NoTelp, member.Company))
+	payload := bytes.NewReader(body)
+
+	client := &http.Client{}
+
+	request, err := http.NewRequest("POST", endpoint, payload)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).
+			JSON(responses.MemberResponse{
+				Status:  http.StatusInternalServerError,
+				Message: "error",
+				Data:    &fiber.Map{"data": err.Error()}})
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+
+	response, err := client.Do(request)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).
+			JSON(responses.MemberResponse{
+				Status:  http.StatusInternalServerError,
+				Message: "error",
+				Data:    &fiber.Map{"data": err.Error()}})
+	}
+	defer response.Body.Close()
+
 	//return successful response
 	return c.Status(http.StatusCreated).JSON(responses.MemberResponse{
 		Status:  http.StatusCreated,
@@ -122,7 +149,7 @@ func Presensi(c *fiber.Ctx) error {
 	}
 
 	if result.MatchedCount == 1 && result.ModifiedCount == 1 {
-		endpoint := fmt.Sprintf("https://sheetdb.io/api/v1/%s", os.Getenv("SHEETS_KEY"))
+		endpoint := fmt.Sprintf("%s%s?sheet=%s", os.Getenv("BASE_URL"), os.Getenv("SHEETS_KEY"), os.Getenv("SHEETS_ATTENDANCE"))
 		body := []byte(fmt.Sprintf(`{"nama": "%s", "email": "%s", "region": "%s", "noTelp": "%s", "company": "%s"}`, member.Nama, member.Email, member.Region, member.NoTelp, member.Company))
 		payload := bytes.NewReader(body)
 
